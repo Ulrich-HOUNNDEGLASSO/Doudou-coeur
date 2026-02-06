@@ -1,4 +1,66 @@
 // ========================================
+// PARALLAXE PROFOND - DEEP MOTION
+// ========================================
+let scrollY = 0;
+let ticking = false;
+
+function updateParallax() {
+    scrollY = window.pageYOffset;
+    
+    // Peluche s'avance encore plus selon le scroll
+    const plush = document.querySelector('.plush-float');
+    if (plush) {
+        const scrollProgress = Math.min(scrollY / window.innerHeight, 1);
+        const zTranslate = scrollProgress * 300; // La peluche avance de 300px
+        const scale = 1 + (scrollProgress * 0.5); // Grossit jusqu'à 1.5x
+        plush.style.transform = `translateZ(${zTranslate}px) scale(${scale})`;
+    }
+    
+    // Icônes orbitaux tournent selon le scroll
+    
+    const orbitals = document.querySelectorAll('.orbital-icon');
+    orbitals.forEach((icon, index) => {
+        const rotation = (scrollY * 0.5) + (index * 60);
+        const distance = 180 + (scrollY * 0.1);
+        icon.style.transform = `rotate(${rotation}deg) translateX(${distance}px) rotate(-${rotation}deg)`;
+    });
+    
+    // Background layers avec profondeur
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        hero.style.setProperty('--scroll-depth', scrollY * 0.5 + 'px');
+    }
+    
+    // Removed section parallax to prevent overlapping - sections now have proper spacing
+    
+    // Cartes qui s'écartent selon le scroll
+    const cards = document.querySelectorAll('.reason-card, .benefit-card');
+    cards.forEach((card, index) => {
+        const cardTop = card.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (cardTop < windowHeight && cardTop > -card.offsetHeight) {
+            const progress = 1 - (cardTop / windowHeight);
+            const spread = index % 2 === 0 ? progress * 30 : -progress * 30;
+            const depth = progress * 100;
+            card.style.transform = `translateX(${spread}px) translateZ(${depth}px) rotateY(${spread * 0.3}deg)`;
+        }
+    });
+    
+    ticking = false;
+}
+
+window.addEventListener('scroll', function() {
+    if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+    }
+});
+
+// Init au chargement
+updateParallax();
+
+// ========================================
 // CURSOR PERSONNALISÉ
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
@@ -165,14 +227,9 @@ updateCountdown();
 setInterval(updateCountdown, 60000); // Mise à jour toutes les minutes
 
 // ========================================
-// PARTICULES DE CŒURS AMBIANTES (OPTIMISÉ)
+// PARTICULES DE CŒURS AMBIANTES
 // ========================================
-let heartCount = 0;
-const maxHearts = 5;
-
 function createFloatingHeart() {
-    if (heartCount >= maxHearts) return;
-
     const heart = document.createElement('div');
     heart.innerHTML = '♥';
     heart.style.position = 'fixed';
@@ -184,25 +241,22 @@ function createFloatingHeart() {
     heart.style.pointerEvents = 'none';
     heart.style.zIndex = '1';
     heart.style.transition = 'all ' + (Math.random() * 5 + 10) + 's linear';
-    heart.style.willChange = 'transform, opacity';
-
+    
     document.body.appendChild(heart);
-    heartCount++;
-
+    
     setTimeout(() => {
         heart.style.bottom = '110vh';
         heart.style.transform = `translateX(${Math.random() * 200 - 100}px) rotate(${Math.random() * 360}deg)`;
         heart.style.opacity = '0';
     }, 100);
-
+    
     setTimeout(() => {
         heart.remove();
-        heartCount--;
     }, 15000);
 }
 
-// Créer un cœur flottant toutes les 5 secondes (réduit pour performance)
-setInterval(createFloatingHeart, 5000);
+// Créer un cœur flottant toutes les 8 secondes (further reduced for better performance)
+setInterval(createFloatingHeart, 8000);
 
 // ========================================
 // SHAKE EFFECT SUR LA PELUCHE AU SURVOL

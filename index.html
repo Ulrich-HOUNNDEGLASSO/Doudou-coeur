@@ -4,8 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doudou Cœur - La peluche qui exprime vos sentiments, sans un mot</title>
+    <meta name="description" content="Offrez une peluche qui parle pour vous. Douceur, amour et tendresse incarnés dans un compagnon tout doux.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#FF1493">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Performance optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
     
-    
+    <!-- DNS prefetch for better performance -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,8 +28,82 @@
     <!-- Preload critical fonts for better performance -->
     <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v35/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvUDNt3i3.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="https://fonts.gstatic.com/s/lora/v32/0QI6MX1D_JOuMw_hLdO6T2wV9KnW-MoFkofpNk.woff2" as="font" type="font/woff2" crossorigin>
-    
-    <link rel="stylesheet" href="style.css">
+
+    <!-- Preload critical hero image -->
+    <link rel="preload" href="Doudou coeur.webp" as="image" type="image/webp">
+    <link rel="preload" href="Doudou coeur.png" as="image" type="image/png">
+
+    <!-- Critical CSS - Above the fold styles -->
+    <style>
+        /* RESET & BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --rouge-vif: #FF0000; --rose-vif: #FF1493; --rose-doux: #FF69B4;
+            --rouge-passion: #DC143C; --blanc: #FFFFFF; --blanc-casse: #F5F5F5;
+            --font-title: 'Playfair Display', serif; --font-body: 'Lora', serif;
+            --spacing-xs: 0.5rem; --spacing-sm: 1rem; --spacing-md: 2rem;
+            --spacing-lg: 3rem; --spacing-xl: 5rem;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body); font-size: 16px; line-height: 1.7;
+            color: #333; background: var(--blanc); overflow-x: hidden;
+        }
+        img { max-width: 100%; height: auto; display: block; }
+
+        /* HERO SECTION - Critical above-the-fold */
+        .hero {
+            min-height: 100vh; background: #0a0a0a; display: flex;
+            align-items: center; padding: 0;
+        }
+        .hero-container {
+            max-width: 1400px; width: 100%; margin: 0 auto; padding: 0 var(--spacing-md);
+            display: grid; grid-template-columns: 1fr; align-items: center;
+            gap: 0; position: relative; z-index: 10; min-height: 100vh;
+        }
+        .hero-plush { width: 100%; max-width: 600px; margin: 0 auto; position: relative; }
+        .plush-float { filter: drop-shadow(0 40px 80px rgba(255, 20, 147, 0.6)); }
+        .hero-content {
+            text-align: center; max-width: 800px; margin: 0 auto;
+            position: relative; padding: var(--spacing-lg) 0;
+        }
+        .hero-title {
+            font-size: clamp(2.5rem, 10vw, 7rem); margin-bottom: var(--spacing-md);
+            font-weight: 900; line-height: 0.9; letter-spacing: -0.04em;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--rose-vif) 50%, var(--blanc) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; background-size: 200% 200%;
+        }
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem); color: rgba(255, 255, 255, 0.9);
+            margin-bottom: var(--spacing-lg); font-weight: 500;
+        }
+        .cta-primary {
+            display: inline-block; padding: 1.8rem 4rem;
+            background: linear-gradient(135deg, var(--rouge-vif) 0%, var(--rouge-passion) 100%);
+            color: var(--blanc); text-decoration: none; font-family: var(--font-body);
+            font-size: 1.4rem; font-weight: 700; border-radius: 60px;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 40px rgba(255, 0, 0, 0.6);
+            text-align: center; position: relative; overflow: hidden;
+            text-transform: uppercase; letter-spacing: 0.15em;
+        }
+
+        /* Mobile responsiveness for critical content */
+        @media (max-width: 768px) {
+            .hero-container { padding: 0 1rem; }
+            .hero-title { font-size: clamp(2rem, 12vw, 5rem); }
+            .hero-subtitle { font-size: 1.2rem; margin-bottom: 2rem; }
+            .cta-primary { padding: 1.2rem 2.5rem; font-size: 1.1rem; }
+        }
+    </style>
+
+    <!-- Load remaining CSS asynchronously -->
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
+
+    <!-- Preload script for better performance -->
+    <link rel="preload" href="script.js" as="script">
 </head>
 <body>
     
@@ -23,7 +111,19 @@
     <section class="hero">
         <div class="hero-container">
             <div class="hero-plush">
-                <img src="Doudou coeur.png" alt="Peluche blanche avec cœur rouge" class="plush-float">
+                <!-- Icônes orbitaux -->
+                <div class="orbital-icons">
+                    <div class="orbital-icon" data-orbit="1">💝</div>
+                    <div class="orbital-icon" data-orbit="2">✨</div>
+                    <div class="orbital-icon" data-orbit="3">💕</div>
+                    <div class="orbital-icon" data-orbit="4">🌟</div>
+                    <div class="orbital-icon" data-orbit="5">💗</div>
+                    <div class="orbital-icon" data-orbit="6">⭐</div>
+                </div>
+                <picture>
+                    <source srcset="Doudou coeur.webp" type="image/webp">
+                    <img src="Doudou coeur.png" alt="Peluche blanche avec cœur rouge" class="plush-float" loading="eager">
+                </picture>
             </div>
             <div class="hero-content">
                 <h1 class="hero-title">La peluche qui exprime vos sentiments, sans un mot</h1>
@@ -64,7 +164,10 @@
         <div class="container">
             <div class="presentation-grid">
                 <div class="presentation-image">
-                    <img src="mon doudou.png" alt="Doudou Cœur dans une ambiance douce" class="ambiance-img" loading="lazy">
+                    <picture>
+                        <source srcset="mon doudou.webp" type="image/webp">
+                        <img src="mon doudou.jpg" alt="Doudou Cœur dans une ambiance douce" class="ambiance-img" loading="lazy">
+                    </picture>
                 </div>
                 <div class="presentation-content">
                     <h2 class="section-title" data-text="Rencontrez Doudou Cœur">Rencontrez Doudou Cœur</h2>
@@ -228,6 +331,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
