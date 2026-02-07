@@ -7,21 +7,20 @@ let ticking = false;
 function updateParallax() {
     scrollY = window.pageYOffset;
     
-    // Peluche s'avance encore plus selon le scroll
+    // Peluche s'avance selon le scroll avec translateZ pour l'effet 3D
     const plush = document.querySelector('.plush-float');
     if (plush) {
         const scrollProgress = Math.min(scrollY / window.innerHeight, 1);
-        const zTranslate = scrollProgress * 300; // La peluche avance de 300px
-        const scale = 1 + (scrollProgress * 0.5); // Grossit jusqu'à 1.5x
+        const zTranslate = scrollProgress * 200; // Avance de 200px en profondeur
+        const scale = 1 + (scrollProgress * 0.3); // Grossit jusqu'à 1.3x
         plush.style.transform = `translateZ(${zTranslate}px) scale(${scale})`;
     }
     
     // Icônes orbitaux tournent selon le scroll
-    
     const orbitals = document.querySelectorAll('.orbital-icon');
     orbitals.forEach((icon, index) => {
-        const rotation = (scrollY * 0.5) + (index * 60);
-        const distance = 180 + (scrollY * 0.1);
+        const rotation = (scrollY * 0.3) + (index * 60);
+        const distance = 180 + (scrollY * 0.05);
         icon.style.transform = `rotate(${rotation}deg) translateX(${distance}px) rotate(-${rotation}deg)`;
     });
     
@@ -31,19 +30,32 @@ function updateParallax() {
         hero.style.setProperty('--scroll-depth', scrollY * 0.5 + 'px');
     }
     
-    // Removed section parallax to prevent overlapping - sections now have proper spacing
+    // Parallaxe différentielle sur les sections - chaque section à une vitesse différente
+    const sections = document.querySelectorAll('.why-offer, .presentation, .emotional-value, .pricing, .reassurance, .testimonials');
+    sections.forEach((section, index) => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (sectionTop < windowHeight && sectionTop > -section.offsetHeight) {
+            // Vitesse différente pour chaque section
+            const speed = 0.1 + (index * 0.05);
+            const yPos = -(scrollY * speed);
+            section.style.transform = `translateY(${yPos}px)`;
+        }
+    });
     
-    // Cartes qui s'écartent selon le scroll
-    const cards = document.querySelectorAll('.reason-card, .benefit-card');
+    // Cartes avec rotation 3D et profondeur selon le scroll
+    const cards = document.querySelectorAll('.reason-card, .benefit-card, .testimonial-card');
     cards.forEach((card, index) => {
         const cardTop = card.getBoundingClientRect().top;
         const windowHeight = window.innerHeight;
         
         if (cardTop < windowHeight && cardTop > -card.offsetHeight) {
             const progress = 1 - (cardTop / windowHeight);
-            const spread = index % 2 === 0 ? progress * 30 : -progress * 30;
-            const depth = progress * 100;
-            card.style.transform = `translateX(${spread}px) translateZ(${depth}px) rotateY(${spread * 0.3}deg)`;
+            const spread = index % 2 === 0 ? progress * 20 : -progress * 20;
+            const depth = progress * 80;
+            // Garder la rotation 3D comme demandé
+            card.style.transform = `translateX(${spread}px) translateZ(${depth}px) rotateY(${spread * 0.2}deg)`;
         }
     });
     
@@ -61,25 +73,27 @@ window.addEventListener('scroll', function() {
 updateParallax();
 
 // ========================================
-// CURSOR PERSONNALISÉ
+// CURSOR PERSONNALISÉ - Desktop uniquement
 // ========================================
-document.addEventListener('DOMContentLoaded', function() {
-    let mouseX = 0;
-    let mouseY = 0;
-    
-    document.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        document.body.style.setProperty('--mouse-x', mouseX + 'px');
-        document.body.style.setProperty('--mouse-y', mouseY + 'px');
+if (window.innerWidth > 1024) {
+    document.addEventListener('DOMContentLoaded', function() {
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        document.addEventListener('mousemove', function(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            document.body.style.setProperty('--mouse-x', mouseX + 'px');
+            document.body.style.setProperty('--mouse-y', mouseY + 'px');
+        });
     });
-});
+}
 
 // ========================================
-// EXPLOSION DE CŒURS AU CLIC
+// EXPLOSION DE CŒURS AU CLIC - Tous appareils
 // ========================================
 document.addEventListener('click', function(e) {
-    // Créer 8 cœurs qui explosent depuis le point de clic
+    // Créer 8 cœurs Font Awesome qui explosent
     for (let i = 0; i < 8; i++) {
         createHeartExplosion(e.clientX, e.clientY, i);
     }
@@ -87,7 +101,7 @@ document.addEventListener('click', function(e) {
 
 function createHeartExplosion(x, y, index) {
     const heart = document.createElement('div');
-    heart.innerHTML = '♥';
+    heart.innerHTML = '<i class="fa-solid fa-heart"></i>';
     heart.style.position = 'fixed';
     heart.style.left = x + 'px';
     heart.style.top = y + 'px';
@@ -122,40 +136,74 @@ function getRandomColor() {
 }
 
 // ========================================
-// PARALLAXE AU SCROLL
+// PLUIE D'ICÔNES SAINT-VALENTIN - Font Awesome
 // ========================================
-window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
+const valentineIcons = [
+    'fa-heart',
+    'fa-gift',
+    'fa-spa',          // Pétales de rose
+    'fa-heart-pulse',
+    'fa-dove',
+    'fa-ring'
+];
+
+function createValentineRain() {
+    const icon = document.createElement('div');
+    const randomIcon = valentineIcons[Math.floor(Math.random() * valentineIcons.length)];
     
-    // Parallaxe sur la peluche hero
-    const plush = document.querySelector('.plush-float');
-    if (plush) {
-        plush.style.transform = `translateY(${scrolled * 0.3}px)`;
-    }
+    icon.innerHTML = `<i class="fa-solid ${randomIcon}"></i>`;
+    icon.className = 'valentine-rain-icon';
+    icon.style.position = 'fixed';
+    icon.style.left = Math.random() * 100 + '%';
+    icon.style.top = '-50px';
+    icon.style.color = getRandomColor();
+    icon.style.fontSize = Math.random() * 15 + 15 + 'px';
+    icon.style.opacity = Math.random() * 0.4 + 0.3;
+    icon.style.pointerEvents = 'none';
+    icon.style.zIndex = '1';
+    icon.style.transition = 'all ' + (Math.random() * 10 + 15) + 's linear';
     
-    // Parallaxe sur les orbes de background
-    const hero = document.querySelector('.hero::before');
-    document.documentElement.style.setProperty('--scroll-y', scrolled + 'px');
-});
+    document.body.appendChild(icon);
+    
+    // Animation de chute
+    setTimeout(() => {
+        icon.style.top = '110vh';
+        icon.style.transform = `translateX(${Math.random() * 100 - 50}px) rotate(${Math.random() * 720}deg)`;
+        icon.style.opacity = '0';
+    }, 100);
+    
+    // Supprimer après l'animation
+    setTimeout(() => {
+        icon.remove();
+    }, 25000);
+}
+
+// Créer une pluie continue d'icônes toutes les 2 secondes
+setInterval(createValentineRain, 2000);
+
+// Créer quelques icônes au chargement
+for (let i = 0; i < 5; i++) {
+    setTimeout(() => createValentineRain(), i * 400);
+}
 
 // ========================================
 // ANIMATION AU SCROLL (Intersection Observer)
 // ========================================
 const observerOptions = {
-    threshold: 0.2,
-    rootMargin: '0px 0px -100px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const observer = new IntersectionObserver(function(entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+            entry.target.style.animation = 'fadeInUp 1s ease-out forwards';
             entry.target.style.opacity = '1';
         }
     });
 }, observerOptions);
 
-// Observer toutes les cartes et sections
+// Observer toutes les cartes
 document.querySelectorAll('.reason-card, .benefit-card, .testimonial-card, .pricing-card').forEach(card => {
     card.style.opacity = '0';
     observer.observe(card);
@@ -179,9 +227,9 @@ document.querySelectorAll('.cta-primary').forEach(button => {
 });
 
 // ========================================
-// HOVER 3D SUR LES CARTES
+// HOVER 3D SUR LES CARTES - Avec rotation 3D
 // ========================================
-document.querySelectorAll('.reason-card, .testimonial-card').forEach(card => {
+document.querySelectorAll('.reason-card, .testimonial-card, .benefit-card').forEach(card => {
     card.addEventListener('mousemove', function(e) {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -190,14 +238,14 @@ document.querySelectorAll('.reason-card, .testimonial-card').forEach(card => {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
+        const rotateX = (y - centerY) / 8;
+        const rotateY = (centerX - x) / 8;
         
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-20px) scale(1.05)`;
+        card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(30px) scale(1.05)`;
     });
     
     card.addEventListener('mouseleave', function() {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+        card.style.transform = 'perspective(1200px) rotateX(0) rotateY(0) translateZ(0) scale(1)';
     });
 });
 
@@ -213,7 +261,6 @@ function updateCountdown() {
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         
-        // Chercher tous les éléments qui mentionnent "Saint-Valentin"
         document.querySelectorAll('.final-cta-note').forEach(note => {
             if (!note.dataset.original) {
                 note.dataset.original = note.textContent;
@@ -224,63 +271,26 @@ function updateCountdown() {
 }
 
 updateCountdown();
-setInterval(updateCountdown, 60000); // Mise à jour toutes les minutes
+setInterval(updateCountdown, 60000);
 
 // ========================================
-// PARTICULES DE CŒURS AMBIANTES
+// TRANSITIONS FONDUES ENTRE SECTIONS
 // ========================================
-function createFloatingHeart() {
-    const heart = document.createElement('div');
-    heart.innerHTML = '♥';
-    heart.style.position = 'fixed';
-    heart.style.left = Math.random() * 100 + '%';
-    heart.style.bottom = '-50px';
-    heart.style.color = getRandomColor();
-    heart.style.fontSize = Math.random() * 15 + 10 + 'px';
-    heart.style.opacity = Math.random() * 0.5 + 0.2;
-    heart.style.pointerEvents = 'none';
-    heart.style.zIndex = '1';
-    heart.style.transition = 'all ' + (Math.random() * 5 + 10) + 's linear';
-    
-    document.body.appendChild(heart);
-    
-    setTimeout(() => {
-        heart.style.bottom = '110vh';
-        heart.style.transform = `translateX(${Math.random() * 200 - 100}px) rotate(${Math.random() * 360}deg)`;
-        heart.style.opacity = '0';
-    }, 100);
-    
-    setTimeout(() => {
-        heart.remove();
-    }, 15000);
-}
-
-// Créer un cœur flottant toutes les 8 secondes (further reduced for better performance)
-setInterval(createFloatingHeart, 8000);
-
-// ========================================
-// SHAKE EFFECT SUR LA PELUCHE AU SURVOL
-// ========================================
-const plushImage = document.querySelector('.plush-float');
-if (plushImage) {
-    plushImage.addEventListener('mouseenter', function() {
-        this.style.animation = 'plushShake 0.5s ease-in-out';
+const sectionObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
     });
-    
-    plushImage.addEventListener('animationend', function() {
-        this.style.animation = 'plushShowcase 4s ease-in-out infinite';
-    });
-}
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+});
 
-// Définir l'animation shake dans le CSS via JavaScript
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes plushShake {
-        0%, 100% { transform: rotate(0deg); }
-        25% { transform: rotate(-10deg) scale(1.1); }
-        75% { transform: rotate(10deg) scale(1.1); }
-    }
-`;
-document.head.appendChild(style);
+// Observer toutes les sections pour les transitions fondues
+document.querySelectorAll('section').forEach(section => {
+    sectionObserver.observe(section);
+});
 
-console.log('🎨 Site showcase activé - Tous les effets sont opérationnels !');
+console.log('🎨 Site showcase activé - Parallaxe profond + Pluie d\'icônes Valentine actifs !');

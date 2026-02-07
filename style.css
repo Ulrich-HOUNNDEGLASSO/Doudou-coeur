@@ -36,8 +36,33 @@ html {
 section {
     scroll-snap-align: start;
     position: relative;
-    will-change: transform;
+    will-change: transform, opacity;
+    opacity: 0;
+    animation: sectionFadeIn 1.5s ease-out forwards;
 }
+
+/* Animation de fondu progressif pour les sections */
+@keyframes sectionFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Délais progressifs pour chaque section */
+.hero { animation-delay: 0s; opacity: 1; }
+.why-offer { animation-delay: 0.2s; }
+.presentation { animation-delay: 0.3s; }
+.emotional-value { animation-delay: 0.4s; }
+.pricing { animation-delay: 0.5s; }
+.reassurance { animation-delay: 0.6s; }
+.testimonials { animation-delay: 0.7s; }
+.final-cta { animation-delay: 0.8s; }
+.footer { animation-delay: 0.9s; }
 
 body {
     font-family: var(--font-body);
@@ -46,14 +71,16 @@ body {
     color: #333;
     background: var(--blanc);
     overflow-x: hidden;
-    cursor: none;
     --mouse-x: 50%;
     --mouse-y: 50%;
 }
 
-/* Cursor personnalisé - Adaptable aux appareils */
-@media (hover: hover) and (pointer: fine) {
-    /* Desktop avec souris */
+/* Cursor personnalisé - Desktop uniquement */
+@media (min-width: 1025px) {
+    body {
+        cursor: none;
+    }
+    
     body::before {
         content: '♥';
         position: fixed;
@@ -66,12 +93,16 @@ body {
         left: var(--mouse-x);
         top: var(--mouse-y);
         transform: translate(-50%, -50%);
-        transition: left 0s ease, top 0s ease;
+        transition: left 0.05s ease, top 0.05s ease;
     }
 }
 
-@media (hover: none) or (pointer: coarse) {
-    /* Mobile/Tablette sans souris */
+/* Tablettes et mobiles - curseur normal */
+@media (max-width: 1024px) {
+    body {
+        cursor: default;
+    }
+    
     body::before {
         display: none;
     }
@@ -92,6 +123,54 @@ img {
     max-width: 100%;
     height: auto;
     display: block;
+}
+
+/* ========================================
+   FONT AWESOME ICONS - Visibility Fix
+   ======================================== */
+.fa-solid, .fa-brands, .fa-regular {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+/* Icônes orbitaux */
+.orbital-icon i {
+    font-size: inherit;
+    color: inherit;
+}
+
+/* Icônes des cartes raisons */
+.reason-icon i {
+    font-size: inherit;
+    color: var(--rose-vif);
+}
+
+/* Icônes de réassurance */
+.reassurance-icon i {
+    font-size: inherit;
+    color: var(--rouge-vif);
+}
+
+/* Étoiles des témoignages */
+.testimonial-stars i {
+    font-size: inherit;
+    color: #FFD700;
+    margin: 0 2px;
+}
+
+/* Icônes de pluie Valentine */
+.valentine-rain-icon i {
+    font-size: inherit;
+    color: inherit;
+}
+
+/* Footer icône */
+.footer-text i {
+    color: var(--rose-vif);
+    font-size: inherit;
 }
 
 /* ========================================
@@ -280,6 +359,23 @@ section {
     font-size: 1.2rem;
 }
 
+/* Responsive styles for cta-large on mobile and tablet */
+@media (max-width: 768px) {
+    .cta-large {
+        padding: 1rem 2rem !important;
+        font-size: 1.1rem !important;
+        min-height: 48px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-large {
+        padding: 0.8rem 1.5rem !important;
+        font-size: 1rem !important;
+        min-height: 44px !important;
+    }
+}
+
 .cta-pulse {
     animation: pulse 2s infinite;
 }
@@ -433,6 +529,7 @@ section {
 .orbital-icon {
     position: absolute;
     font-size: 2.5rem;
+    color: var(--rose-vif);
     filter: drop-shadow(0 0 20px rgba(255, 20, 147, 0.8));
     animation: orbit 8s linear infinite;
     transform-origin: center;
@@ -499,6 +596,14 @@ section {
     transform: translateZ(50px);
     will-change: transform;
     padding: var(--spacing-lg) 0;
+}
+
+/* Large screens: hero-content takes 90% width */
+@media (min-width: 1024px) {
+    .hero-content {
+        width: 90%;
+        max-width: none;
+    }
 }
 
 .hero-title {
@@ -671,6 +776,7 @@ section {
     font-size: 4.5rem;
     margin-bottom: var(--spacing-md);
     display: inline-block;
+    color: var(--rose-vif);
     transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.8));
     will-change: transform;
@@ -1009,14 +1115,20 @@ section {
     top: -15px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--rouge-vif);
+    background: transparent;
     color: var(--blanc);
-    padding: 0.5rem 1.5rem;
+    padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-weight: 600;
     font-size: 0.9rem;
     animation: badgePulse 2s ease-in-out infinite;
-    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+    box-shadow: none;
+}
+
+.pricing-badge img {
+    width: 40px;
+    height: auto;
+    display: block;
 }
 
 @keyframes badgePulse {
@@ -1051,7 +1163,7 @@ section {
 
 .price-current {
     font-size: 4rem;
-    color: var(--rouge-vif);
+    color: var(--blanc);
     font-weight: 900;
     font-family: var(--font-title);
     text-shadow: 0 0 20px rgba(255, 0, 0, 0.8),
@@ -1063,9 +1175,9 @@ section {
 
 @keyframes neonPulse {
     0%, 100% {
-        text-shadow: 0 0 20px rgba(255, 0, 0, 0.8),
-                     0 0 40px rgba(255, 0, 0, 0.6),
-                     0 0 60px rgba(255, 0, 0, 0.4);
+        text-shadow: 0 0 20px rgba(255, 0, 0, 0.6),
+                     0 0 40px rgba(255, 0, 0, 0.3),
+                     0 0 60px rgba(255, 0, 0, 0.1);
         transform: scale(1);
     }
     50% {
@@ -1162,6 +1274,11 @@ section {
     padding: var(--spacing-md);
     transition: transform 0.3s ease;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
 }
 
 .reassurance-item:hover {
@@ -1172,6 +1289,7 @@ section {
     font-size: 3rem;
     margin-bottom: var(--spacing-sm);
     display: inline-block;
+    color: var(--rouge-vif);
     transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 

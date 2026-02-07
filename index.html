@@ -20,11 +20,15 @@
     <!-- DNS prefetch for better performance -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="styleheet">
 
     <!-- Preload critical fonts for better performance -->
     <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v35/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvUDNt3i3.woff2" as="font" type="font/woff2" crossorigin>
@@ -114,12 +118,12 @@
             <div class="hero-plush">
                 <!-- Icônes orbitaux -->
                 <div class="orbital-icons">
-                    <div class="orbital-icon" data-orbit="1">💝</div>
-                    <div class="orbital-icon" data-orbit="2">✨</div>
-                    <div class="orbital-icon" data-orbit="3">💕</div>
-                    <div class="orbital-icon" data-orbit="4">🌟</div>
-                    <div class="orbital-icon" data-orbit="5">💗</div>
-                    <div class="orbital-icon" data-orbit="6">⭐</div>
+                    <div class="orbital-icon" data-orbit="1"><i class="fa-solid fa-gift"></i></div>
+                    <div class="orbital-icon" data-orbit="2"><i class="fa-solid fa-gift"></i></div>
+                    <div class="orbital-icon" data-orbit="3"><i class="fa-solid fa-spa"></i></div>
+                    <div class="orbital-icon" data-orbit="4"><i class="fa-solid fa-gift"></i></div>
+                    <div class="orbital-icon" data-orbit="5"><i class="fa-solid fa-spa"></i></div>
+                    <div class="orbital-icon" data-orbit="6"><i class="fa-solid fa-gift"></i></div>
                 </div>
                 <picture>
                     <source srcset="Doudou coeur.webp" type="image/webp">
@@ -142,17 +146,17 @@
             
             <div class="reasons-grid">
                 <div class="reason-card">
-                    <div class="reason-icon">💝</div>
+                    <div class="reason-icon"><i class="fa-solid fa-heart"></i></div>
                     <h3>Un amour qui se voit</h3>
                     <p>Son cœur rouge brodé parle pour vous. Impossible de passer à côté de votre message.</p>
                 </div>
                 <div class="reason-card">
-                    <div class="reason-icon">🤗</div>
+                    <div class="reason-icon"><i class="fa-solid fa-paw"></i></div>
                     <h3>Un réconfort quotidien</h3>
                     <p>Chaque câlin rappelle votre présence, même à distance. Toujours là, toujours doux.</p>
                 </div>
                 <div class="reason-card">
-                    <div class="reason-icon">✨</div>
+                    <div class="reason-icon"><i class="fa-solid fa-spa"></i></div>
                     <h3>Une pureté touchante</h3>
                     <p>Blanc immaculé, amour sincère. Un cadeau sans artifice, juste de l'émotion pure.</p>
                 </div>
@@ -166,7 +170,7 @@
             <div class="presentation-grid">
                 <div class="presentation-image">
                     <picture>
-                        <source srcset="mon doudou.webp" type="image/webp">
+                        <source srcset="Doudou coeur - ambiance.webp" type="image/webp">
                         <img src="mon doudou.png" alt="Doudou Cœur dans une ambiance douce" class="ambiance-img" loading="lazy">
                     </picture>
                 </div>
@@ -233,23 +237,21 @@
     <section class="pricing" id="offre">
         <div class="container">
             <h2 class="section-title" data-text="Offre Saint-Valentin">Offre Saint-Valentin</h2>
-            <!-- <p class="pricing-intro">Un prix doux pour un cadeau qui n'a pas de prix.</p> -->
             
             <div class="pricing-card">
-                <div class="pricing-badge">Édition Limitée</div>
+                <div class="pricing-badge"><img src="Doudou coeur.png" alt="Édition Limitée"></div>
                 <h3 class="pricing-product">Doudou Cœur</h3>
                 <div class="pricing-amount">
-                    <!-- <span class="price-old"></span> -->
                     <span class="price-current">15 000 FCFA</span>
                 </div>
                 <p class="pricing-detail">Livraison offerte avant la Saint-Valentin</p>
                 
-                <ul class="pricing-includes">
+                <!-- <ul class="pricing-includes">
                     <li>Peluche Doudou Cœur (30cm)</li>
                     <li>Emballage cadeau romantique</li>
                     <li>Carte message personnalisable</li>
                     <li>Livraison express gratuite</li>
-                </ul>
+                </ul> -->
                 
                 <a href="#commande" class="cta-primary cta-large">Commander maintenant</a>
                 <p class="pricing-guarantee">Satisfait ou remboursé 30 jours</p>
@@ -262,22 +264,17 @@
         <div class="container">
             <div class="reassurance-grid">
                 <div class="reassurance-item">
-                    <div class="reassurance-icon">🚚</div>
+                    <div class="reassurance-icon"><i class="fa-solid fa-motorcycle"></i></div>
                     <h4>Livraison rapide</h4>
                     <p>Expédition sous 24h, réception garantie avant le 14 février</p>
                 </div>
                 <div class="reassurance-item">
-                    <div class="reassurance-icon">💳</div>
+                    <div class="reassurance-icon"><i class="fa-solid fa-credit-card"></i></div>
                     <h4>Paiement sécurisé</h4>
                     <p>Transactions cryptées et protégées, vos données en sécurité</p>
                 </div>
                 <div class="reassurance-item">
-                    <div class="reassurance-icon">♻️</div>
-                    <h4>Retour facile</h4>
-                    <p>30 jours pour changer d'avis, remboursement intégral</p>
-                </div>
-                <div class="reassurance-item">
-                    <div class="reassurance-icon">💌</div>
+                    <div class="reassurance-icon"><i class="fa-solid fa-paper-plane"></i></div>
                     <h4>Service client 7j/7</h4>
                     <p>Une question ? Notre équipe vous répond en moins de 2h</p>
                 </div>
@@ -292,17 +289,35 @@
             
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
                     <p class="testimonial-text">"Ma copine a pleuré en ouvrant le paquet. Elle dort avec tous les soirs maintenant. Meilleur cadeau que j'ai jamais offert."</p>
                     <p class="testimonial-author">— Lucas, 26 ans</p>
                 </div>
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
                     <p class="testimonial-text">"Je suis en déplacement souvent. Savoir qu'elle a Doudou Cœur pour la rassurer me soulage. C'est un peu moi qui reste près d'elle."</p>
                     <p class="testimonial-author">— Marie, 31 ans</p>
                 </div>
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
                     <p class="testimonial-text">"Tellement doux ! La qualité est incroyable. Et le petit cœur rouge, c'est juste parfait. Livraison ultra rapide en plus."</p>
                     <p class="testimonial-author">— Thomas, 24 ans</p>
                 </div>
@@ -325,8 +340,8 @@
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
-            <p class="footer-text">Fait avec 💝 pour ceux qui aiment sans compter</p>
-            <p class="footer-legal">© 2024 Doudou Cœur · Mentions légales · CGV</p>
+            <p class="footer-text">Fait avec <i class="fa-solid fa-heart"></i> pour ceux qui aiment sans compter</p>
+            <p class="footer-legal">© 2026 Doudou Cœur · Mentions légales · CGV</p>
         </div>
     </footer>
 
